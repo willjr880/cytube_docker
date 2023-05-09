@@ -37,3 +37,10 @@ Create these .toml files based on the above example templates with your personal
 Run docker-compose down && docker-compose build && docker-compose up -d
 
 Verify that the functionality is now working.
+
+## Changing other options in config.yaml
+I've exposed minimal options in the config file to get up and running. If there's something you need to update that I havent included please check the build/Dockerfile, where you will see a large section of items like:
+```
+  yq -i ".mysql.server = \"db\"" config.yaml && \
+```
+You can add an additional line with the section of the config you want to update accordingly. If you believe it should be included by default please contact me.
