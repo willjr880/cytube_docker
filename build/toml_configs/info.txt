@@ -1,0 +1,2 @@
+Include your edited .toml config files in this folder for additional functionality.
+For more info see the examples at https://github.com/calzoneman/sync/tree/3.0/conf/example
