@@ -1,0 +1,33 @@
+version: '3.4'
+x-mariadb: &mariadb
+    MARIADB_ROOT_PASSWORD: ''
+    CYTUBE_MARIADB_PASSWORD: ''
+
+services:
+  db:
+    image: mariadb:latest
+    restart: unless-stopped
+    environment: *mariadb
+    volumes:
+      - './db:/var/lib/mysql'
+      - './build/postinst.sh:/docker-entrypoint-initdb.d/postinst.sh'
+      - './build/make_admin.sh:/make_admin.sh'
+
+  web:
+    build:
+      context: ./build
+      args:
+        <<: *mariadb
+        CYTUBE_URL: ''
+        CYTUBE_TITLE: 'Sync'
+        CYTUBE_DESC: 'Free, open source synchtube'
+        TWITCH_CLIENT_ID: 'null'
+        YOUTUBE_V3_API_KEY: 'null'
+    restart: unless-stopped
+    links:
+      - db
+    depends_on:
+      - db
+    ports:
+      - "8880:8080"
+      - "8881:443"
