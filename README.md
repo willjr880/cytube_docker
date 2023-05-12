@@ -28,6 +28,20 @@ This container will provide an unsecure instance of CyTube 3.0. The assumption i
         reverse_proxy /socket.io/* localhost:8881
    }
    ```
+   OR (in the case of CloudFlare)
+   ```
+  your.cytube-url.com {
+        tls your_ssl.pem your_ssl.key {
+                [protocols, ciphers, key_type info]
+        }
+        reverse_proxy localhost:8880 {
+                header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+        }
+        reverse_proxy /socket.io/* localhost:8881 {
+                header_up X-Forwarded-For {http.request.header.CF-Connecting-IP}
+        }
+   }
+   ```
 * Restart Caddy and verify you can access the URL. Register an account.
 * Make yourself an admin by running: 
   ``` 
