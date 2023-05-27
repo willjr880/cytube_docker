@@ -4,7 +4,7 @@ ARG CYTUBE_MARIADB_PASSWORD CYTUBE_URL CYTUBE_TITLE CYTUBE_DESC YOUTUBE_V3_API_K
 RUN apk add --no-cache build-base git mariadb-client python3 npm yq uuidgen ffmpeg
 RUN git clone -b 3.0 https://github.com/calzoneman/sync
 RUN cd sync && npm install
-RUN cd sync && mv config.template.yaml config.yaml
+COPY sync/config.template.yaml sync/config.yaml
 COPY toml_configs /tmp/sync/conf/
 RUN mkdir /service && cp -r /tmp/sync /service/
 RUN cd /service/sync && npm install -g forever
